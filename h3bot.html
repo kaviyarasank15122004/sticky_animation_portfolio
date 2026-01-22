@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaviyarasan K - Embedded Systems Engineer</title>
+  <style>
+    /* Global Reset & Base Styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 5%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #1e3a8a;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #3b82f6;
+    }
+
+    /* Hero Animation Section */
+    .hero-animation {
+      position: relative;
+      height: 300vh;
+      background: #000;
+    }
+
+    #scroll-canvas {
+      position: sticky;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .hero-content {
+      text-align: center;
+      color: #fff;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+      padding: 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .hero-content p {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: 0.9rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* Section Styling */
+    section {
+      padding: 5rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    section h2 {
+      font-size: 2.5rem;
+      color: #1e3a8a;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    section h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: #3b82f6;
+    }
+
+    /* About Section */
+    #about {
+      background: #f8fafc;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .profile-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .profile-card h3 {
+      color: #1e3a8a;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .profile-card p {
+      color: #64748b;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info {
+      text-align: left;
+      margin-top: 1.5rem;
+    }
+
+    .contact-info p {
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
+      color: #475569;
+      line-height: 1.8;
+    }
+
+    /* Education Section */
+    .education-grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .education-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      border-left: 4px solid #3b82f6;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .education-card h3 {
+      color: #1e3a8a;
+      margin-bottom: 0.5rem;
+    }
+
+    .education-card .degree {
+      color: #3b82f6;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .education-card .duration {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    /* Skills Section */
+    #skills {
+      background: #f8fafc;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .skill-category {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .skill-category h3 {
+      color: #1e3a8a;
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+    }
+
+    .skill-category ul {
+      list-style: none;
+    }
+
+    .skill-category li {
+      padding: 0.6rem 0;
+      color: #475569;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .skill-category li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: #3b82f6;
+      font-weight: bold;
+    }
+
+    /* Projects Section */
+    .project-card {
+      background: #fff;
+      padding: 2.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      margin-top: 2rem;
+    }
+
+    .project-card h3 {
+      color: #1e3a8a;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-card .project-tag {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1e3a8a;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-card p {
+      color: #475569;
+      line-height: 1.8;
+    }
+
+    /* Core Subjects */
+    #subjects {
+      background: #f8fafc;
+    }
+
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .subject-item {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      color: #1e3a8a;
+      font-weight: 600;
+      transition: transform 0.3s;
+    }
+
+    .subject-item:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Contact Section */
+    .contact-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      color: #1e3a8a;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 0.8rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .btn {
+      background: #1e3a8a;
+      color: #fff;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #3b82f6;
+    }
+
+    .btn-download {
+      display: inline-block;
+      margin-top: 1rem;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    /* Footer */
+    footer {
+      background: #1e3a8a;
+      color: #fff;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+
+      nav ul {
+        gap: 1rem;
+        font-size: 0.9rem;
+      }
+
+      section {
+        padding: 3rem 5%;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#subjects">Core Subjects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Animation Section -->
+  <div id="hero" class="hero-animation">
+    <canvas id="scroll-canvas">
+      Your browser does not support the HTML canvas element.
+    </canvas>
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <h1>Kaviyarasan K</h1>
+        <p>Embedded Systems Engineer | ECE Student</p>
+      </div>
+      <div class="scroll-indicator">
+        ↓ Scroll to explore ↓
+      </div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="about-content">
+      <div class="profile-card">
+        <h3>Kaviyarasan K</h3>
+        <p>Embedded Systems Engineer</p>
+        <div class="contact-info">
+          <p>📍 Vedaranyam, Tamil Nadu</p>
+          <p>📧 loftherings232@gmail.com</p>
+          <p>📱 +91 9360663514</p>
+        </div>
+      </div>
+      <div class="about-text">
+        <p>
+          I am a highly motivated final-year Electronics and Communication Engineering student with a strong foundation in embedded systems, digital electronics, firmware development, and hardware-software integration. My passion lies in building real-world embedded solutions that bridge the gap between hardware and software.
+        </p>
+        <p style="margin-top: 1rem;">
+          With hands-on experience in microcontroller programming, circuit design, and system simulation, I am eager to contribute to innovative engineering teams and continue growing as a professional in the embedded systems domain.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section id="education">
+    <h2>Education</h2>
+    <div class="education-grid">
+      <div class="education-card">
+        <h3>Government College of Engineering, Srirangam</h3>
+        <p class="degree">Bachelor of Engineering – Electronics and Communication Engineering</p>
+        <p class="duration">2022 – 2026</p>
+        <p style="margin-top: 1rem; color: #3b82f6; font-weight: 600;">CGPA: 7.7 (up to 5th semester)</p>
+      </div>
+      <div class="education-card">
+        <h3>R. Natesanar Government Higher Secondary School</h3>
+        <p class="degree">Higher Secondary Education</p>
+        <p class="duration">2019 – 2022</p>
+        <p style="margin-top: 1rem;"><strong>SSLC:</strong> 420 | <strong>HSC:</strong> 521</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <h2>Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h3>Technical Skills</h3>
+        <ul>
+          <li>Embedded Systems</li>
+          <li>C Programming</li>
+          <li>Python</li>
+          <li>Verilog HDL</li>
+          <li>Digital Electronics</li>
+          <li>Firmware Development</li>
+        </ul>
+      </div>
+      <div class="skill-category">
+        <h3>Tools & Software</h3>
+        <ul>
+          <li>MPLAB</li>
+          <li>Proteus</li>
+          <li>Xilinx ISE</li>
+          <li>Cadence Virtuoso</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project-card">
+      <h3>Embedded Based Mini Car</h3>
+      <span class="project-tag">Internship Project</span>
+      <p>
+        Developed an embedded autonomous mini car using the PIC16F887 microcontroller. Implemented ultrasonic sensing for obstacle detection and avoidance. Worked on embedded C programming, peripheral interfacing, and system simulation using Proteus. This project strengthened skills in debugging, hardware-software integration, and real-time embedded system design.
+      </p>
+    </div>
+  </section>
+
+  <!-- Core Subjects Section -->
+  <section id="subjects">
+    <h2>Core Subjects</h2>
+    <div class="subjects-grid">
+      <div class="subject-item">Digital Electronics</div>
+      <div class="subject-item">Embedded Systems</div>
+      <div class="subject-item">Communication Systems</div>
+      <div class="subject-item">Computer Networks</div>
+      <div class="subject-item">Optical Communication</div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Get In Touch</h2>
+    <div class="contact-container">
+      <p style="text-align: center; color: #1e3a8a; font-weight: 600; margin-bottom: 1rem;">
+        Career Objective: Seeking an entry-level role or internship in embedded systems, firmware development, or core electronics where I can apply my technical skills, grow professionally, and contribute to innovative engineering solutions.
+      </p>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" required></textarea>
+        </div>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+      <a href="#" class="btn btn-download" onclick="alert('Resume download feature - connect your resume file!')">
+        Download Resume
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Kaviyarasan K. All rights reserved.</p>
+    <p>Embedded Systems Engineer | Building the future, one circuit at a time.</p>
+  </footer>
+
+  <script>
+    // Canvas setup
+    const canvas = document.getElementById("scroll-canvas");
+    const ctx = canvas.getContext("2d");
+
+    // Total number of frames
+    const frameCount = 200;
+
+    // Image path generator
+    const currentFrame = (index) =>
+      `images/ezgif-frame-${index.toString().padStart(3, "0")}.jpg`;
+
+    // Set canvas size to viewport
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    // Preload images
+    const images = [];
+    let imagesLoaded = 0;
+
+    for (let i = 1; i <= frameCount; i++) {
+      const img = new Image();
+      img.src = currentFrame(i);
+      img.onload = () => {
+        imagesLoaded++;
+        if (imagesLoaded === 1) {
+          renderFrame(0);
+        }
+      };
+      images.push(img);
+    }
+
+    // Draw image maintaining aspect ratio
+    function drawImageContain(img) {
+      const canvasRatio = canvas.width / canvas.height;
+      const imgRatio = img.width / img.height;
+
+      let drawWidth, drawHeight, offsetX, offsetY;
+
+      if (imgRatio > canvasRatio) {
+        // Image is wider
+        drawWidth = canvas.width;
+        drawHeight = canvas.width / imgRatio;
+        offsetX = 0;
+        offsetY = (canvas.height - drawHeight) / 2;
+      } else {
+        // Image is taller
+        drawHeight = canvas.height;
+        drawWidth = canvas.height * imgRatio;
+        offsetX = (canvas.width - drawWidth) / 2;
+        offsetY = 0;
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+    }
+
+    // Render a specific frame
+    function renderFrame(index) {
+      if (images[index] && images[index].complete) {
+        drawImageContain(images[index]);
+      }
+    }
+
+    // Scroll handler
+    function onScroll() {
+      const heroSection = document.querySelector('.hero-animation');
+      const rect = heroSection.getBoundingClientRect();
+      const scrollFraction = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
+      const frameIndex = Math.min(
+        frameCount - 1,
+        Math.floor(scrollFraction * frameCount)
+      );
+
+      requestAnimationFrame(() => renderFrame(frameIndex));
+    }
+
+    window.addEventListener("scroll", onScroll);
+
+    // Form submission
+    function handleSubmit(event) {
+      event.preventDefault();
+      alert('Thank you for your message! I will get back to you soon.');
+      event.target.reset();
+    }
+  </script>
+</body>
+</html>
